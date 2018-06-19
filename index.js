@@ -28,17 +28,27 @@ var method=request.method.toLowerCase();
 var headers=request.headers;
 //get payload if any
 
-var decoder=new StringDecoder('utf-8');
+var decoder=new stringdecoder('utf-8');
 var buffer='';
+request.on('data',function(data){
+    buffer+=decoder.end();
+});
+request.on('end',function(){
+    buffer+=decoder.end();
+//send response 
+response.end("hello world\n");
+// log the request path
 
+console.log("request rcvd with this payload : ",buffer);
 
+});
 // send response
 
-response.end("hello\n");
+//response.end("hello\n");
 
 // log req path
-console.log('req rcvd on path: ' +trimmedpath+'with method:'+method+'with this query stirng',queryobj);
-console.log('request rcvd with headers ',headers);
+//console.log('req rcvd on path: ' +trimmedpath+'with method:'+method+'with this query stirng',queryobj);
+//console.log('request rcvd with headers ',headers);
     
 
 }).listen(3000);
